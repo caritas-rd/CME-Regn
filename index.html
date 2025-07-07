@@ -457,6 +457,7 @@
 
   const scriptURL = 'https://script.google.com/macros/s/AKfycbwo9GU1WVBscK6j3DhiJ1pJtIUCP8oIxJrnOIvxvglTVp7Tpn_TO91o1skEXr0F9rh9/exec';
   fetch(scriptURL, { method: 'GET' }).catch(() => {});
+  console.log("hi")
   // 📩 Handle form submission
   form.addEventListener('submit', e => {
     e.preventDefault();

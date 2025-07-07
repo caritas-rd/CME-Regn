@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Doctor Registration</title>
+  <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .background-glow {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 70%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 30%, rgba(139, 69, 219, 0.08) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(1deg); }
+            66% { transform: translate(-20px, 20px) rotate(-1deg); }
+        }
+
+        .form-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            border-radius: 32px;
+            padding: 60px 50px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 40px 80px rgba(59, 130, 246, 0.1), 
+                        0 0 1px rgba(59, 130, 246, 0.2) inset;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.3), transparent);
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .form-header h1 {
+            color: #1e293b;
+            font-size: 2.8rem;
+            font-weight: 300;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #1e293b, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .form-header p {
+            color: #64748b;
+            font-size: 1.1rem;
+            font-weight: 400;
+        }
+
+        .form-section {
+            margin-bottom: 40px;
+        }
+
+        .logo-container {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 5px;
+          margin-bottom: 5px;
+          position: relative;
+          z-index: 2;
+        }
+
+        .logo {
+          width: 100px;
+          background: linear-gradient(135deg, var(--white), var(--white));
+          border-radius: 20px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 28px;
+          font-weight: 900;
+          color: white;
+          position: relative;
+          animation: logoSpin 10s ease-in-out infinite;
+        }
+
+        @keyframes logoSpin {
+          0%, 100% { transform: rotate(0deg) scale(1); }
+          25% { transform: rotate(5deg) scale(1.05); }
+          50% { transform: rotate(0deg) scale(1.1); }
+          75% { transform: rotate(-5deg) scale(1.05); }
+        }
+
+        .logo::after {
+          content: '';
+          position: absolute;
+          inset: -2px;
+          border-radius: 22px;
+          background: linear-gradient(45deg, var(--blue), var(--blue), var(--cyan));
+          z-index: -1;
+          animation: logoBorder 3s ease-in-out infinite;
+        }
+
+        @keyframes logoBorder {
+          0%, 100% { opacity: 0; }
+          50% { opacity: 1; }
+        }
+
+        .section-title {
+            color: #1e293b;
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border-radius: 2px;
+        }
+
+        .form-grid {
+            display: grid;
+            gap: 24px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-group label {
+            color: #374151;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+            display: block;
+            transition: color 0.3s ease;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 18px 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            color: #1f2937;
+            font-size: 1rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.95);
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .form-group input:focus + label,
+        .form-group select:focus + label {
+            color: #3b82f6;
+        }
+
+        .form-group select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23374151' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 16px;
+            padding-right: 50px;
+        }
+
+        .form-group select option {
+            background: #ffffff;
+            color: #1f2937;
+        }
+
+        .form-group input::placeholder {
+            color: #9ca3af;
+        }
+
+        .required {
+            color: #ff6b6b;
+            font-size: 0.8rem;
+            margin-left: 4px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border: none;
+            border-radius: 16px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3);
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        .submit-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .success-message {
+            text-align: center;
+            padding: 40px 20px;
+            display: none;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #4ade80, #22c55e);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            font-size: 2rem;
+            animation: scaleIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0); }
+            to { transform: scale(1); }
+        }
+
+        .success-title {
+            color: #1e293b;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .success-text {
+            color: #64748b;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 40px 30px;
+                margin: 10px;
+            }
+            
+            .form-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .form-container {
+                padding: 30px 20px;
+            }
+            
+            .form-header h1 {
+                font-size: 1.9rem;
+            }
+        }
+        .processing-message {
+  text-align: center;
+  padding: 40px 20px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.processing-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+  width: 100%;
+  height: 100%;
+}
+
+.spinner .path {
+  stroke: #3b82f6;
+  stroke-linecap: round;
+}
+
+.processing-title {
+  color: #1e293b;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.processing-text {
+  color: #64748b;
+  font-size: 1rem;
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+    </style>
+</head>
+<body>
+  <div class="background-glow"></div>
+
+  <div class="form-container">
+    <div class="form-header">
+              <div class="logo-container">
+        <div class="logo"><img src="logo2.jpg" alt="Caritas Hospital" class="logo"></div>
+      </div>
+      <h1>Caritas KMA Network</h1>
+      <p>CME, KMA THIKA DIVISION</p>
+    </div>
+
+    <form id="doctorForm">
+      <div class="form-section">
+        <h3 class="section-title">Personal Details</h3>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="firstName">Name </label>
+            <input type="text" id="firstName" name="firstName" required />
+          </div>
+            <div class="form-group">
+              <label for="whatsapp">WhatsApp Number</label>
+              <input type="tel" id="whatsapp" name="whatsapp" />
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" name="phone" />
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email" />
+            </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3 class="section-title">Professional Information</h3>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="Specialty">Specialty</label>
+            <input type="text" id="Specialty" name="Specialty" />
+          </div>
+          <div class="form-group">
+            <label for="hospital">Current Practice </label>
+            <input type="text" id="hospital" name="hospital" placeholder="Hospital or Clinic Name" />
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn">Complete Registration</button>
+    </form>
+
+    <div class="processing-message" id="processingMessage" style="display: none;">
+      <div class="processing-icon">
+        <svg class="spinner" viewBox="0 0 50 50">
+          <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="4"/>
+        </svg>
+      </div>
+      <h2 class="processing-title">Submitting your details...</h2>
+      <p class="processing-text">Please wait while we process your registration.</p>
+    </div>
+
+    <div class="success-message" id="successMessage">
+      <div class="success-icon">✓</div>
+      <h2 class="success-title">Welcome Aboard!</h2>
+      <p class="success-text">Your registration has been submitted successfully. <br><br>Thank you for joining the CME!</p>
+    </div>
+
+    <button id="addAnotherBtn" class="submit-btn" style="display: none; background: #10b981;">Add Another Doctor</button>
+  </div>
+
+<script>
+  const form = document.getElementById('doctorForm');
+  const successMessage = document.getElementById('successMessage');
+  const addAnotherBtn = document.getElementById('addAnotherBtn');
+  const processingMessage = document.getElementById('processingMessage');
+
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbx9hrp0A5g2Pk-TBxTdFmV3agonROViA3KIzKQzkI8Qs9RxKPxG6KBgqlwAfqXFSADp/exec';
+
+  // 📩 Handle form submission
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    form.style.display = 'none'; // instantly hide
+    successMessage.style.display = 'none'; // show immediately
+    processingMessage.style.display = 'none'; // show immediately
+    fetch(scriptURL, {
+      method: 'POST',
+      body: new FormData(form)
+    })
+    .then(response => {
+      form.reset();
+      processingMessage.style.display = 'none';
+      successMessage.style.display = 'block';
+      addAnotherBtn.style.display = 'block';
+    })
+    .catch(error => {
+      alert("❌ Submission failed. Please try again.");
+      console.error('Error!', error.message);
+      processingMessage.style.display = 'none';
+      form.style.display = 'block';
+    });
+  });
+
+  // ➕ Add another entry
+  addAnotherBtn.addEventListener('click', () => {
+    form.style.display = 'block';
+    successMessage.style.display = 'none';
+    addAnotherBtn.style.display = 'none';
+    form.reset();
+  });
+</script>
+
+
+</body>
+</html>

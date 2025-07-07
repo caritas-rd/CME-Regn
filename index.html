@@ -462,7 +462,7 @@
     e.preventDefault();
     form.style.display = 'none'; // instantly hide
     successMessage.style.display = 'none'; // show immediately
-    processingMessage.style.display = 'none'; // show immediately
+    processingMessage.style.display = 'block'; // show immediately
     fetch(scriptURL, {
       method: 'POST',
       body: new FormData(form)

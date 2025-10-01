@@ -192,11 +192,6 @@
             backdrop-filter: blur(10px);
         }
 
-        .phone-input-wrapper input,
-        .phone-input-wrapper select {
-            width: auto;
-        }
-
         .form-group input:focus,
         .form-group select:focus {
             outline: none;
@@ -228,33 +223,6 @@
 
         .form-group input::placeholder {
             color: #9ca3af;
-        }
-
-        .phone-input-wrapper {
-            display: flex;
-            position: relative;
-        }
-
-        .country-code {
-            width: 120px;
-            flex-shrink: 0;
-            border-radius: 16px 0 0 16px;
-            border-right: none;
-            padding-right: 8px;
-        }
-
-        .phone-input-wrapper input {
-            flex: 1;
-            border-radius: 0 16px 16px 0;
-            padding-left: 12px;
-        }
-
-        .phone-input-wrapper .country-code:focus {
-            border-right: none;
-        }
-
-        .phone-input-wrapper input:focus {
-            border-left-color: #3b82f6;
         }
 
         .required {
@@ -340,51 +308,6 @@
             line-height: 1.6;
         }
 
-        .processing-message {
-            text-align: center;
-            padding: 40px 20px;
-            display: none;
-            animation: fadeIn 0.3s ease-in-out;
-        }
-
-        .processing-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 20px;
-        }
-
-        .spinner {
-            animation: spin 1s linear infinite;
-            width: 100%;
-            height: 100%;
-        }
-
-        .spinner .path {
-            stroke: #3b82f6;
-            stroke-linecap: round;
-        }
-
-        .processing-title {
-            color: #1e293b;
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 12px;
-        }
-
-        .processing-text {
-            color: #64748b;
-            font-size: 1rem;
-        }
-
-        @keyframes spin {
-            100% { transform: rotate(360deg); }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
         @media (max-width: 768px) {
             .form-container {
                 padding: 40px 30px;
@@ -398,16 +321,6 @@
             .form-row {
                 grid-template-columns: 1fr;
             }
-
-            .country-code {
-                width: 95px;
-                font-size: 0.9rem;
-                padding: 18px 8px;
-            }
-
-            .phone-input-wrapper input {
-                font-size: 0.9rem;
-            }
         }
 
         @media (max-width: 480px) {
@@ -418,18 +331,51 @@
             .form-header h1 {
                 font-size: 1.9rem;
             }
-
-            .country-code {
-                width: 85px;
-                font-size: 0.85rem;
-                padding: 18px 6px;
-            }
-
-            .phone-input-wrapper input {
-                font-size: 0.85rem;
-                padding: 18px 10px;
-            }
         }
+        .processing-message {
+  text-align: center;
+  padding: 40px 20px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.processing-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+  width: 100%;
+  height: 100%;
+}
+
+.spinner .path {
+  stroke: #3b82f6;
+  stroke-linecap: round;
+}
+
+.processing-title {
+  color: #1e293b;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.processing-text {
+  color: #64748b;
+  font-size: 1rem;
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
     </style>
 </head>
 <body>
@@ -437,10 +383,10 @@
 
   <div class="form-container">
     <div class="form-header">
-      <div class="logo-container">
+              <div class="logo-container">
         <div class="logo"><img src="logo2.jpg" alt="Caritas Hospital" class="logo"></div>
       </div>
-      <h1>Caritas Friends Network</h1>
+      <h1>Caritas KMA Network</h1>
       <p>CME, KMA THIKA DIVISION</p>
     </div>
 
@@ -452,46 +398,18 @@
             <label for="firstName">Name </label>
             <input type="text" id="firstName" name="firstName" required />
           </div>
-          <div class="form-group">
-            <label for="whatsapp">WhatsApp Number</label>
-            <div class="phone-input-wrapper">
-              <select id="whatsappCode" name="whatsappCode" class="country-code">
-                <option value="+254" selected>🇰🇪 +254</option>
-                <option value="+1">🇺🇸 +1</option>
-                <option value="+44">🇬🇧 +44</option>
-                <option value="+91">🇮🇳 +91</option>
-                <option value="+971">🇦🇪 +971</option>
-                <option value="+255">🇹🇿 +255</option>
-                <option value="+256">🇺🇬 +256</option>
-                <option value="+250">🇷🇼 +250</option>
-                <option value="+234">🇳🇬 +234</option>
-                <option value="+27">🇿🇦 +27</option>
-              </select>
-              <input type="tel" id="whatsapp" name="whatsapp" placeholder="712345678" />
+            <div class="form-group">
+              <label for="whatsapp">WhatsApp Number</label>
+              <input type="tel" id="whatsapp" name="whatsapp" />
             </div>
-          </div>
-          <div class="form-group">
-            <label for="phone">Phone Number</label>
-            <div class="phone-input-wrapper">
-              <select id="phoneCode" name="phoneCode" class="country-code">
-                <option value="+254" selected>🇰🇪 +254</option>
-                <option value="+1">🇺🇸 +1</option>
-                <option value="+44">🇬🇧 +44</option>
-                <option value="+91">🇮🇳 +91</option>
-                <option value="+971">🇦🇪 +971</option>
-                <option value="+255">🇹🇿 +255</option>
-                <option value="+256">🇺🇬 +256</option>
-                <option value="+250">🇷🇼 +250</option>
-                <option value="+234">🇳🇬 +234</option>
-                <option value="+27">🇿🇦 +27</option>
-              </select>
-              <input type="tel" id="phone" name="phone" placeholder="712345678" />
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" name="phone" />
             </div>
-          </div>
-          <div class="form-group">
-            <label for="email">Email Address</label>
-            <input type="email" id="email" name="email" />
-          </div>
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email" />
+            </div>
         </div>
       </div>
 
@@ -512,7 +430,7 @@
       <button type="submit" class="submit-btn">Complete Registration</button>
     </form>
 
-    <div class="processing-message" id="processingMessage">
+    <div class="processing-message" id="processingMessage" style="display: none;">
       <div class="processing-icon">
         <svg class="spinner" viewBox="0 0 50 50">
           <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="4"/>
@@ -531,25 +449,21 @@
     <button id="addAnotherBtn" class="submit-btn" style="display: none; background: #10b981;">Add Another Doctor</button>
   </div>
 
-  <script>
+<script>
   const form = document.getElementById('doctorForm');
   const successMessage = document.getElementById('successMessage');
   const addAnotherBtn = document.getElementById('addAnotherBtn');
   const processingMessage = document.getElementById('processingMessage');
 
-  const scriptURL = 'https://script.google.com/macros/s/AKfycbzoi8UqlCCwC7JNhEKOFbQtz1OwCGl0uVplYIwDbJx9DyyuZJljjz76ErHj3qZtyicb/exec';
-  
-  // Pre-warm the script
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbwo9GU1WVBscK6j3DhiJ1pJtIUCP8oIxJrnOIvxvglTVp7Tpn_TO91o1skEXr0F9rh9/exec';
   fetch(scriptURL, { method: 'GET' }).catch(() => {});
-
+  console.log("hi")
+  // 📩 Handle form submission
   form.addEventListener('submit', e => {
     e.preventDefault();
-    
-    // Hide form and show processing
-    form.style.display = 'none';
-    processingMessage.style.display = 'block';
-    successMessage.style.display = 'none';
-    
+    form.style.display = 'none'; // instantly hide
+    successMessage.style.display = 'none'; // show immediately
+    processingMessage.style.display = 'block'; // show immediately
     fetch(scriptURL, {
       method: 'POST',
       body: new FormData(form)
@@ -568,14 +482,15 @@
     });
   });
 
+  // ➕ Add another entry
   addAnotherBtn.addEventListener('click', () => {
     form.style.display = 'block';
     successMessage.style.display = 'none';
     addAnotherBtn.style.display = 'none';
-    processingMessage.style.display = 'none';
     form.reset();
   });
 </script>
+
 
 </body>
 </html>
